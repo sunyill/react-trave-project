@@ -5,5 +5,5 @@
   width: 1230px;
   margin-right: auto;
   margin-left: auto;
-  height: 75vh;
+  min-height: 75vh;
 }
