@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./HotTourist.module.css";
-import { Divider, Row, Col, Typography } from "antd";
+import { Divider, Row, Col } from "antd";
 import { ProductImageInfo } from "./ProductImageInfo";
 
 interface PropsType {
