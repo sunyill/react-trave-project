@@ -17,8 +17,10 @@ import image1 from "../../assets/hot/sider_2019_02-04-2.png";
 import image2 from "../../assets/hot/sider_2019_02-04.png";
 import image3 from "../../assets/hot/sider_2019_12-09.png";
 import styles from "./HomePage.module.css";
-export class HomePage extends React.Component {
+import {withTranslation,WithTranslation} from 'react-i18next'
+ class HomePageComponent extends React.Component<WithTranslation> {
   render() {
+    const {t} = this.props
     return (
       <>
         <Header />
@@ -35,7 +37,7 @@ export class HomePage extends React.Component {
           <HotTourist
             title={
               <Typography.Title level={3} type="danger">
-                爆款推荐
+                {t("home_page.hot_recommended")}
               </Typography.Title>
             }
             sideImage={image1}
@@ -44,7 +46,7 @@ export class HomePage extends React.Component {
           <HotTourist
             title={
               <Typography.Title level={3} type="success">
-                新品上市
+                 {t("home_page.new_arrival")}
               </Typography.Title>
             }
             sideImage={image2}
@@ -53,7 +55,7 @@ export class HomePage extends React.Component {
           <HotTourist
             title={
               <Typography.Title level={3} type="warning">
-                潮人路线
+                 {t("home_page.domestic_travel")}
               </Typography.Title>
             }
             sideImage={image3}
@@ -61,8 +63,10 @@ export class HomePage extends React.Component {
           />
           <Company />
         </div>
-        <Footer />
+        <Footer/>
       </>
     );
   }
 }
+
+export const HomePage = withTranslation()(HomePageComponent)

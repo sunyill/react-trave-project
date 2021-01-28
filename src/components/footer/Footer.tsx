@@ -1,7 +1,9 @@
 import React from "react";
-import { Dropdown, Layout, Menu, Button, Typography, Input } from "antd";
+import {  Layout,Typography } from "antd";
+import {useTranslation,WithTranslation} from 'react-i18next'
 
 export const Footer: React.FC = () => {
+  const {t} = useTranslation()
   return (
     <div>
       <Layout.Footer>
@@ -10,7 +12,7 @@ export const Footer: React.FC = () => {
           style={{ textAlign: "center" }}
           type={"success"}
         >
-          版权所有 @ React 旅游网
+          {t('footer.detail')}
         </Typography.Title>
       </Layout.Footer>
     </div>
