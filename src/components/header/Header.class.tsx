@@ -9,7 +9,7 @@ import { GlobalOutlined } from "@ant-design/icons";
 import { withRouter, RouteComponentProps } from "react-router-dom"
 import store from '../../redux/store'
 import { languageState } from '../../redux/languageReducer'
-import {CHANGE_LANGUAGE} from '../../utils/constant'
+import { CHANGE_LANGUAGE, ADD_NEW_LANGUAGE } from '../../utils/constant'
 
 
 interface State extends languageState { }
@@ -21,13 +21,32 @@ class HeaderComponent extends React.Component<RouteComponentProps, State>{
       language: storeState.language,
       languageList: storeState.languageList
     }
+    // 订阅, 接收新消息关联
+    store.subscribe(this.subscribeNewsHandle)
   }
+  subscribeNewsHandle = () => {
+    const storeState = store.getState()
+    this.setState({
+      language: storeState.language,
+      languageList:storeState.languageList
+    })
+  }
+
   changeMenuItemHandle(e) {
-    const action = {
-      type:CHANGE_LANGUAGE,
-      payload:e.key
+    if (e.key === "new") {
+      const action = {
+        type: ADD_NEW_LANGUAGE,
+        payload: { code: "newLanguage", name: "新语言" }
+      }
+      store.dispatch(action)
+    } else {
+      const action = {
+        type: CHANGE_LANGUAGE,
+        payload: e.key
+      }
+      store.dispatch(action)
     }
-    store.dispatch(action)
+
   }
   render() {
     const { history } = this.props;   // 获取路由history 对象
@@ -43,6 +62,7 @@ class HeaderComponent extends React.Component<RouteComponentProps, State>{
                   {this.state.languageList.map(mm => {
                     return <Menu.Item key={mm.code}>{mm.name}</Menu.Item>
                   })}
+                  <Menu.Item key="new">添加新语言</Menu.Item>
                 </Menu>
               }
               icon={<GlobalOutlined />}

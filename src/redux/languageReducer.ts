@@ -1,7 +1,7 @@
 /**
  * 創建reducer步驟
  */
-import {CHANGE_LANGUAGE} from '../utils/constant'
+import {CHANGE_LANGUAGE,ADD_NEW_LANGUAGE} from '../utils/constant'
 export interface languageState {
   language: 'en' | 'zh',
   languageList: { "name": string; "code": string }[]
@@ -15,10 +15,12 @@ const languageDefault: languageState = {
 }
 
 export default (state = languageDefault, action)=>{
-  console.log("state==",state, "====action",action);
-  if(action.type==="CHANGE_LANGUAGE"){
-    const newState = {...state, language:action.payload }
-    return newState;
+  switch(action.type){
+    case CHANGE_LANGUAGE:
+      return {...state, language:action.payload }
+    case ADD_NEW_LANGUAGE:
+      return {...state,languageList:[...state.languageList,action.payload] }
+      default:
+        return state
   }
-  return state;
 }
