@@ -12,6 +12,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route path="/signIn" component={SignIn} />
           <Route path="/register" component={RegisiterPage} />
+          <Route path="/detail/:touristId" component={DetailPage} />
           <Route
             render={() => (
               <img src={notFound} className={styles.not_fount}></img>
