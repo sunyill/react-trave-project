@@ -8,8 +8,20 @@ import { Dropdown, Layout, Menu, Button, Typography, Input } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 import { withRouter, RouteComponentProps } from "react-router-dom"
+import store from '../../redux/store'
+import { languageState } from '../../redux/languageReducer'
 
-class HeaderComponent extends React.Component<RouteComponentProps>{
+
+interface State extends languageState { }
+class HeaderComponent extends React.Component<RouteComponentProps,State>{
+  constructor(props) {
+    super(props)
+    const storeState = store.getState()
+    this.state = {
+      language:storeState.language,
+      languageList:storeState.languageList
+    }
+  }
   render() {
     return (
       <div className={styles["app-header"]}>
@@ -20,13 +32,14 @@ class HeaderComponent extends React.Component<RouteComponentProps>{
               style={{ marginLeft: 15 }}
               overlay={
                 <Menu>
-                  <Menu.Item>中文</Menu.Item>
-                  <Menu.Item>English</Menu.Item>
+                  {this.state.languageList.map(mm=>{
+                    return <Menu.Item key= {mm.code}>{mm.name}</Menu.Item>
+                  })}
                 </Menu>
               }
               icon={<GlobalOutlined />}
             >
-              语言
+              {this.state.language ==="zh"?"中文":"English"}
           </Dropdown.Button>
             <Button.Group className={styles["button-group"]}>
               <Button >注册</Button>
@@ -66,4 +79,4 @@ class HeaderComponent extends React.Component<RouteComponentProps>{
   }
 };
 
-export default HeaderComponent
+export const Header= withRouter(HeaderComponent) 

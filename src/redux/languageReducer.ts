@@ -1,7 +1,7 @@
 /**
  * 創建reducer步驟
  */
-interface languageState {
+export interface languageState {
   language: 'en' | 'zh',
   languageList: { "name": string; "code": string }[]
 }
@@ -10,7 +10,7 @@ const languageDefault: languageState = {
   language: 'zh',
   languageList: [{
     name: "中文", code: 'zh'
-  }, { name: "英文", code: 'en' }]
+  }, { name: "English", code: 'en' }]
 }
 
 export default (state = languageDefault, action)=>{
