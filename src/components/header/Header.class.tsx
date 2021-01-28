@@ -6,23 +6,31 @@ import styles from "./Header.module.css";
 import logo from "../../assets/logo.svg";
 import { Dropdown, Layout, Menu, Button, Typography, Input } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
-import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 import { withRouter, RouteComponentProps } from "react-router-dom"
 import store from '../../redux/store'
 import { languageState } from '../../redux/languageReducer'
+import {CHANGE_LANGUAGE} from '../../utils/constant'
 
 
 interface State extends languageState { }
-class HeaderComponent extends React.Component<RouteComponentProps,State>{
+class HeaderComponent extends React.Component<RouteComponentProps, State>{
   constructor(props) {
     super(props)
     const storeState = store.getState()
     this.state = {
-      language:storeState.language,
-      languageList:storeState.languageList
+      language: storeState.language,
+      languageList: storeState.languageList
     }
   }
+  changeMenuItemHandle(e) {
+    const action = {
+      type:CHANGE_LANGUAGE,
+      payload:e.key
+    }
+    store.dispatch(action)
+  }
   render() {
+    const { history } = this.props;   // 获取路由history 对象
     return (
       <div className={styles["app-header"]}>
         <div className={styles["top-header"]}>
@@ -31,24 +39,24 @@ class HeaderComponent extends React.Component<RouteComponentProps,State>{
             <Dropdown.Button
               style={{ marginLeft: 15 }}
               overlay={
-                <Menu>
-                  {this.state.languageList.map(mm=>{
-                    return <Menu.Item key= {mm.code}>{mm.name}</Menu.Item>
+                <Menu onClick={this.changeMenuItemHandle}>
+                  {this.state.languageList.map(mm => {
+                    return <Menu.Item key={mm.code}>{mm.name}</Menu.Item>
                   })}
                 </Menu>
               }
               icon={<GlobalOutlined />}
             >
-              {this.state.language ==="zh"?"中文":"English"}
-          </Dropdown.Button>
+              {this.state.language === "zh" ? "中文" : "English"}
+            </Dropdown.Button>
             <Button.Group className={styles["button-group"]}>
-              <Button >注册</Button>
-              <Button >登录</Button>
+              <Button onClick={() => { history.push('register') }}>注册</Button>
+              <Button onClick={() => { history.push('signIn') }}>登录</Button>
             </Button.Group>
           </div>
         </div>
         <Layout.Header className={styles["main-header"]}>
-          <span >
+          <span onClick={() => { history.push('/') }} >
             <img src={logo} alt="" className={styles["App-logo"]} />
             <Typography.Title level={3} className={styles.title}>
               React 旅游网
@@ -75,8 +83,8 @@ class HeaderComponent extends React.Component<RouteComponentProps,State>{
           <Menu.Item key="13"> 爱玩户外 </Menu.Item>
         </Menu>
       </div>
-    );
+    )
   }
-};
+}
 
-export const Header= withRouter(HeaderComponent) 
+export const Header = withRouter(HeaderComponent)
