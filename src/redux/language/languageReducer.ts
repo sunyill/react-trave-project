@@ -1,7 +1,7 @@
 /**
  * 創建reducer步驟
  */
-import {CHANGE_LANGUAGE,ADD_NEW_LANGUAGE} from '../utils/constant'
+import {CHANGE_LANGUAGE,ADD_NEW_LANGUAGE,LanguageActionTypes} from './languageActions'
 import i18n from 'i18next'
 export interface languageState {
   language: 'en' | 'zh',
@@ -15,7 +15,7 @@ const languageDefault: languageState = {
   }, { name: "English", code: 'en' }]
 }
 
-export default (state = languageDefault, action)=>{
+export default (state = languageDefault, action:LanguageActionTypes)=>{
   switch(action.type){
     case CHANGE_LANGUAGE:
       i18n.changeLanguage(action.payload)

@@ -6,9 +6,10 @@ import { Dropdown, Layout, Menu, Button, Typography, Input } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { withRouter, RouteComponentProps } from "react-router-dom"
 import store from '../../redux/store'
-import { languageState } from '../../redux/languageReducer'
+import { languageState } from '../../redux/language/languageReducer'
 import { CHANGE_LANGUAGE, ADD_NEW_LANGUAGE } from '../../utils/constant'
 import { withTranslation, WithTranslation } from 'react-i18next'
+import { addNewLanguageActionCreator, changeLanguageActionCreator } from '../../redux/language/languageActions'
 /**
  * 
  * 使用redux处理数据
@@ -39,16 +40,10 @@ class HeaderComponent extends React.Component<RouteComponentProps & WithTranslat
 
   changeMenuItemHandle(e) {
     if (e.key === "new") {
-      const action = {
-        type: ADD_NEW_LANGUAGE,
-        payload: { code: "newLanguage", name: "新语言" }
-      }
+      const action = addNewLanguageActionCreator( "newLanguage","新语言")
       store.dispatch(action)
     } else {
-      const action = {
-        type: CHANGE_LANGUAGE,
-        payload: e.key
-      }
+      const action = changeLanguageActionCreator(e.key)
       store.dispatch(action)
     }
 
@@ -108,7 +103,7 @@ class HeaderComponent extends React.Component<RouteComponentProps & WithTranslat
           <Menu.Item key="13"> {t("header.enterprise")} </Menu.Item>
           <Menu.Item key="14"> {t("header.high_end")} </Menu.Item>
           <Menu.Item key="15"> {t("header.outdoor")} </Menu.Item>
-       
+
         </Menu>
       </div>
     )
