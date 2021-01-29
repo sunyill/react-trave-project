@@ -22,19 +22,19 @@ import { connect } from "react-redux"
 
 const mapStateToProps = (state: RootState) => {
   return {
-    language: state.language,
-    languageList: state.languageList
+    language: state.language.language,
+    languageList: state.language.languageList
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    changeLanguage: (code:"en" | "zh") => {
+    changeLanguage: (code: "en" | "zh") => {
       const action = changeLanguageActionCreator(code)
       dispatch(action)
     },
-    addLanguage: (name:string, code:string) => {
-      const action = addNewLanguageActionCreator(name,code);
+    addLanguage: (name: string, code: string) => {
+      const action = addNewLanguageActionCreator(name, code);
       dispatch(action)
     }
   }
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 type PropsType = RouteComponentProps & WithTranslation & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 class HeaderComponents extends React.Component<PropsType>{
 
-  changeMenuItemHandle=(e) =>{
+  changeMenuItemHandle = (e) => {
     if (e.key === "new") {
       // const action = addNewLanguageActionCreator("newLanguage", "新语言")
       // store.dispatch(action)
