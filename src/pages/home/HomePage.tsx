@@ -13,12 +13,9 @@ import image2 from "../../assets/hot/sider_2019_02-04.png";
 import image3 from "../../assets/hot/sider_2019_12-09.png";
 import styles from "./HomePage.module.css";
 import { withTranslation, WithTranslation } from 'react-i18next'
-import axios from 'axios'
 import { RootState } from '../../redux/store'
 import {
-  fetchRecommendProductStartActionCreator,
-  fetchRecommendProductSuccessActionCreator,
-  fetchRecommendProductFailActionCreator,
+  giveMeDateActionCreator
 } from '../../redux/recommendProducts/recommendProductsActions'
 import { connect } from "react-redux"
 
@@ -32,14 +29,8 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchStart: () => {
-      dispatch(fetchRecommendProductStartActionCreator())
-    },
-    fetchSuccess: (data) => {
-      dispatch(fetchRecommendProductSuccessActionCreator(data))
-    },
-    fetchFail: (error) => {
-      dispatch(fetchRecommendProductFailActionCreator(error))
+    giveMeData() {
+      dispatch(giveMeDateActionCreator())
     }
   }
 }
@@ -47,19 +38,11 @@ type PropsTypes = WithTranslation & ReturnType<typeof mapStateToProps> & ReturnT
 class HomePageComponent extends React.Component<PropsTypes> {
 
   async componentDidMount() {
-    this.props.fetchStart()
-    try {
-      const { data } = await axios.get("http://123.56.149.216:8080/api/productCollections")
-      this.props.fetchSuccess(data)
-    } catch (error) {
-      this.props.fetchFail(error.message) 
-    }
-
+    this.props.giveMeData()
   }
 
   render() {
     const { t, productList, loading, error } = this.props
-
 
     if (loading) {
       return (
