@@ -4,3 +4,4 @@ export * from "./banner";
 export * from "./slideItem";
 export * from "./hotTourist";
 export * from "./company";
+export * from './productIntro';
